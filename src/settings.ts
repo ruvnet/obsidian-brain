@@ -269,14 +269,14 @@ export class BrainSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName("Bearer token")
 			.setDesc("Required for /v1/memories/* endpoints. Stored in the plugin data.json.")
-			.addText((t) =>
-				t
-					.setValue(this.plugin.settings.piToken)
-					.onChange(async (v) => {
-						this.plugin.settings.piToken = v.trim();
-						await this.plugin.saveSettings();
-					}),
-			);
+			.addText((t) => {
+				t.inputEl.type = "password";
+				t.setValue(this.plugin.settings.piToken).onChange(async (v) => {
+					this.plugin.settings.piToken = v.trim();
+					await this.plugin.saveSettings();
+				});
+				return t;
+			});
 
 		new Setting(containerEl)
 			.setName("Pull limit")
